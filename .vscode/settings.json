@@ -13,6 +13,7 @@
   },
   "explorer.fileNesting.patterns": {
     "*.py": "*.pyc",
+    "pdm.lock": ".pdm*",
     ".env.example": ".env, .env.*",
     ".prettierrc": ".prettierrc.*, .prettierignore, .prettierrc.js, .prettierrc.json, .prettierrc.yaml, .prettierrc.yml",
     "pyproject.toml": ".python-version-*, .pylintrc, .pylintrc-*, .python-version",

@@ -1,23 +1,27 @@
 [project]
-name = "devcoffee-schema-sync"
+name = "devcoffee-schema"
 version = "0.1.0"
-description = "Schema registry synchronization tool"
-authors = [{ name = "Hiếu Nguyễn" }]
+description = "Devcoffee Schema Registry"
+authors = [{ name = "Hieu Nguyen", email = "hieu.nguyen@devcoffee.tech" }]
 requires-python = ">=3.12"
+readme = "README.md"
+license = { text = "MIT" }
 
 # =========================
 # DEPENDENCIES
 # =========================
+dependencies = ["requests>=2.32.0", "python-dotenv>=1.2.1"]
 
-dependencies = ["requests>=2.32.0"]
+
 # =========================
 # DEV DEPENDENCIES
 # =========================
 [tool.pdm.dev-dependencies]
 lint = ["ruff>=0.5.0"]
 
+
 [tool.pdm]
-distribution = false
+distribution = true
 
 # =========================
 # RUFF
@@ -52,3 +56,7 @@ line-ending = "lf"
 
 [tool.ruff.lint.isort]
 known-first-party = ["devcoffee_schema"]
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
