@@ -2,7 +2,22 @@
   "files.associations": {
     "*.avsc": "json"
   },
+  "files.exclude": {
+    "**/__pycache__": true,
+    ".idea": true
+  },
   "editor.formatOnSave": true,
+  "explorer.fileNesting.enabled": true,
+  "explorer.autoRevealExclude": {
+    "**/.venv": true,
+  },
+  "explorer.fileNesting.patterns": {
+    "*.py": "*.pyc",
+    ".env.example": ".env, .env.*",
+    ".prettierrc": ".prettierrc.*, .prettierignore, .prettierrc.js, .prettierrc.json, .prettierrc.yaml, .prettierrc.yml",
+    "pyproject.toml": ".python-version-*, .pylintrc, .pylintrc-*, .python-version",
+    "Dockerfile": ".dockerignore",
+  },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }

@@ -1,0 +1,54 @@
+[project]
+name = "devcoffee-schema-sync"
+version = "0.1.0"
+description = "Schema registry synchronization tool"
+authors = [{ name = "Hiếu Nguyễn" }]
+requires-python = ">=3.12"
+
+# =========================
+# DEPENDENCIES
+# =========================
+
+dependencies = ["requests>=2.32.0"]
+# =========================
+# DEV DEPENDENCIES
+# =========================
+[tool.pdm.dev-dependencies]
+lint = ["ruff>=0.5.0"]
+
+[tool.pdm]
+distribution = false
+
+# =========================
+# RUFF
+# =========================
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+src = ["src"]
+
+
+[tool.pdm.scripts]
+lint = "ruff check ."
+fmt = "ruff format ."
+
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle
+    "F",  # pyflakes
+    "I",  # import sort
+    "UP", # pyupgrade
+    "B",  # bugbear
+]
+ignore = []
+
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+
+[tool.ruff.lint.isort]
+known-first-party = ["devcoffee_schema"]
