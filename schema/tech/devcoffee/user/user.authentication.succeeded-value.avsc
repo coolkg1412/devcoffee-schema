@@ -1,0 +1,119 @@
+{
+  "type": "record",
+  "name": "UserAuthenticationSucceeded",
+  "namespace": "tech.devcoffee.user",
+  "doc": "Emitted when a user authentication succeeds.",
+  "fields": [
+    {
+      "name": "event_id",
+      "type": "string",
+      "doc": "Unique identifier of the event (uuid)"
+    },
+    {
+      "name": "trace_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Trace identifier for distributed tracing (uuid)"
+    },
+    {
+      "name": "event_name",
+      "type": "string",
+      "default": "user.authentication.succeeded",
+      "doc": "The name of the event"
+    },
+    {
+      "name": "event_time",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "When the authentication succeeded"
+    },
+    {
+      "name": "producer",
+      "type": "string",
+      "doc": "Service that produced the event"
+    },
+    {
+      "name": "data",
+      "doc": "Event payload data",
+      "type": {
+        "type": "record",
+        "name": "AuthenticationPayload",
+        "fields": [
+          {
+            "name": "user",
+            "type": {
+              "type": "record",
+              "name": "User",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "string",
+                  "doc": "User's unique identifier (uuid)"
+                },
+                {
+                  "name": "email",
+                  "type": ["null", "string"],
+                  "default": null,
+                  "doc": "User's email address"
+                }
+              ]
+            }
+          },
+          {
+            "name": "authentication",
+            "type": {
+              "type": "record",
+              "name": "Authentication",
+              "fields": [
+                {
+                  "name": "method",
+                  "type": {
+                    "type": "enum",
+                    "name": "AuthenticationMethod",
+                    "symbols": ["PASSWORD", "OIDC", "REMEMBER_TOKEN", "API_KEY"]
+                  }
+                },
+                {
+                  "name": "provider",
+                  "type": ["null", "string"],
+                  "default": null,
+                  "doc": "OIDC provider that authenticated the user. e.g. google, github"
+                }
+              ]
+            }
+          },
+          {
+            "name": "client",
+            "type": {
+              "type": "record",
+              "name": "Client",
+              "doc": "The client that initiated the authentication",
+              "fields": [
+                {
+                  "name": "ip",
+                  "type": ["null", "string"],
+                  "default": null,
+                  "doc": "IP address of the client"
+                },
+                {
+                  "name": "user_agent",
+                  "type": ["null", "string"],
+                  "default": null,
+                  "doc": "User agent of the client"
+                },
+                {
+                  "name": "device",
+                  "type": ["null", "string"],
+                  "default": null,
+                  "doc": "Device identifier of the client"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
