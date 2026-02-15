@@ -10,7 +10,7 @@ license = { text = "MIT" }
 # =========================
 # DEPENDENCIES
 # =========================
-dependencies = ["requests>=2.32.0", "python-dotenv>=1.2.1"]
+dependencies = ["requests>=2.32.0", "django-environ>=0.12.1"]
 
 
 # =========================
@@ -29,6 +29,7 @@ distribution = true
 [tool.ruff]
 line-length = 120
 target-version = "py312"
+extend-exclude = [".venv"]
 src = ["src"]
 
 
@@ -46,6 +47,10 @@ select = [
     "B",  # bugbear
 ]
 ignore = []
+
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
 
 
 [tool.ruff.format]

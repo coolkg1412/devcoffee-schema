@@ -5,7 +5,7 @@
 groups = ["default", "lint"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:1b312fdc9a89e8f21763702f8296abef0f64300d75395042a121f6a9da2074a3"
+content_hash = "sha256:d65d1f0ee902c06d3506a040d3b370b2fc46a8f0226bef9a027926bfb5992b6d"
 
 [[metadata.targets]]
 requires_python = ">=3.12"
@@ -81,6 +81,17 @@ files = [
 ]
 
 [[package]]
+name = "django-environ"
+version = "0.12.1"
+requires_python = "<4,>=3.9"
+summary = "A package that allows you to utilize 12factor inspired environment variables to configure your Django application."
+groups = ["default"]
+files = [
+    {file = "django_environ-0.12.1-py2.py3-none-any.whl", hash = "sha256:064ba2d5082f833e6d7fe4def4928bde1eedc0248a417575da7db147aeec1c20"},
+    {file = "django_environ-0.12.1.tar.gz", hash = "sha256:22859c6e905ab7637fa3348d1787543bb4492f38d761104a3ce0519b7b752845"},
+]
+
+[[package]]
 name = "idna"
 version = "3.11"
 requires_python = ">=3.8"
@@ -89,17 +100,6 @@ groups = ["default"]
 files = [
     {file = "idna-3.11-py3-none-any.whl", hash = "sha256:771a87f49d9defaf64091e6e6fe9c18d4833f140bd19464795bc32d966ca37ea"},
     {file = "idna-3.11.tar.gz", hash = "sha256:795dafcc9c04ed0c1fb032c2aa73654d8e8c5023a7df64a53f39190ada629902"},
-]
-
-[[package]]
-name = "python-dotenv"
-version = "1.2.1"
-requires_python = ">=3.9"
-summary = "Read key-value pairs from a .env file and set them as environment variables"
-groups = ["default"]
-files = [
-    {file = "python_dotenv-1.2.1-py3-none-any.whl", hash = "sha256:b81ee9561e9ca4004139c6cbba3a238c32b03e4894671e181b671e8cb8425d61"},
-    {file = "python_dotenv-1.2.1.tar.gz", hash = "sha256:42667e897e16ab0d66954af0e60a9caa94f0fd4ecf3aaf6d2d260eec1aa36ad6"},
 ]
 
 [[package]]
