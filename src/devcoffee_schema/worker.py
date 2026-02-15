@@ -1,4 +1,5 @@
 import json
+import logging
 import sys
 from collections.abc import Iterable
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -8,25 +9,32 @@ import requests
 
 HEADERS = {"Content-Type": "application/vnd.schemaregistry.v1+json"}
 
+logger = logging.getLogger(__name__)
+
 
 class SyncWorker:
     def __init__(
-        self, schema_dir: Path, registry_url: str, request_kwarg: dict[str, str] | None = None, max_workers: int = 8
+        self,
+        schema_dir: Path,
+        registry_url: str,
+        request_kwarg: dict[str, str] | None = None,
+        max_workers: int = 8,
     ) -> None:
         self.schema_dir = schema_dir
         self.registry_url = registry_url
         self.request_kwarg = request_kwarg or {}
         self.max_workers = max_workers
-        print(f"max_workers={max_workers}")
 
     def run(self) -> None:
         files = list(self._collect_files())
-        print(self.schema_dir)
+
+        logger.info("schema_dir=%s", self.schema_dir)
+
         if not files:
-            print("⚠️ No schema files found")
+            logger.warning("No schema files found")
             return
 
-        print(f"🚀 Sync {len(files)} schemas to {self.registry_url}")
+        logger.info(f"Sync {len(files)} schemas to '{self.registry_url}'")
 
         errors: list[Exception] = []
 
@@ -36,16 +44,16 @@ class SyncWorker:
             for future in as_completed(futures):
                 try:
                     subject, schema_id = future.result()
-                    print(f"✅ {subject} -> id {schema_id}")
+                    logger.info(f"Success: '{subject}' -> id '{schema_id}'")
                 except Exception as e:
-                    print(f"❌ {e}")
+                    logger.error("Failed: error='{e}", exc_info=e)
                     errors.append(e)
 
         if errors:
-            print(f"\n💥 Failed: {len(errors)} schema(s)")
+            logger.error(f"Failed: {len(errors)} schema(s)")
             sys.exit(1)
 
-        print("🎉 Done")
+        logger.info("Done")
 
     def _collect_files(self) -> Iterable[Path]:
         return sorted(self.schema_dir.rglob("*.avsc"))
@@ -54,7 +62,7 @@ class SyncWorker:
         sub = file.stem.lower()
 
         if not sub.endswith("-value"):
-            f"{sub}-value"
+            sub = f"{sub}-value"
 
         return sub
 
@@ -66,16 +74,21 @@ class SyncWorker:
 
         payload = {"schema": json.dumps(schema)}
 
+        endpoint = f"{self.registry_url}/subjects/{subject}/versions"
+        logger.debug(f"subject: '{subject}' - endpoint='{endpoint}' - payload='{payload}'")
+
         resp = requests.post(
-            f"{self.registry_url}/subjects/{subject}/versions",
-            **self.request_kwarg,
+            endpoint,
             headers=HEADERS,
             json=payload,
+            **self.request_kwarg,
         )
 
         if resp.status_code >= 300:
             raise RuntimeError(f"{subject} -> {resp.text}")
 
         results = resp.json()
-        print(results)
-        return subject, results["id"]
+
+        logger.debug(f"response={results}")
+
+        return subject, 1

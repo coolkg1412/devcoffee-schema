@@ -25,7 +25,7 @@ def main():
 
     worker = SyncWorker(
         settings.schema_dir,
-        registry_url=settings.from_env,
+        registry_url=settings.registry_url,
         request_kwarg={"timeout": settings.timeout},
         max_workers=calculate_workers(),
     )
