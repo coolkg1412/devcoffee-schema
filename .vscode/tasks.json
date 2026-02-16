@@ -1,0 +1,58 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Port-forward Kafka Schema Registry",
+            "type": "shell",
+            "command": "kubectl",
+            "args": [
+                "port-forward",
+                "svc/kafka-schema-registry",
+                "8081:8081",
+                "-n",
+                "infrastructure"
+            ],
+            "isBackground": true,
+            "problemMatcher": [
+                {
+                    "owner": "kubectl",
+                    "fileLocation": "absolute",
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "Forwarding from 127.0.0.1",
+                        "endsPattern": "Forwarding from \\["
+                    },
+                    "pattern": [
+                        {
+                            "regexp": "^(ERROR|WARNING) in (.*)\\(.*$",
+                            "severity": 1,
+                            "file": 2,
+                            "line": 3,
+                            "message": 4
+                        }
+                    ]
+                }
+            ],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated"
+            }
+        },
+        {
+            "label": "Synchronous Schema to Registry",
+            "type": "shell",
+            "command": "${command:python.interpreterPath}",
+            "args": [
+                "sync.py"
+            ],
+            "dependsOn": [
+                "Port-forward Kafka Schema Registry"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        }
+    ]
+}
