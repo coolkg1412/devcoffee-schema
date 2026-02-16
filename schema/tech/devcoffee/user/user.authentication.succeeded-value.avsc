@@ -54,9 +54,42 @@
                 },
                 {
                   "name": "email",
+                  "type": ["string"],
+                  "doc": "User's first"
+                },
+                {
+                  "name": "firstName",
+                  "type": ["string"],
+                  "doc": "User's first name"
+                },
+                {
+                  "name": "lastName",
+                  "type": ["string"],
+                  "doc": "User's last name"
+                },
+                {
+                  "name": "language",
                   "type": ["null", "string"],
                   "default": null,
-                  "doc": "User's email address"
+                  "doc": "User's language"
+                },
+                {
+                  "name": "timezone",
+                  "type": ["null", "string"],
+                  "default": null,
+                  "doc": "User's timezone"
+                },
+                {
+                  "name": "dateJoined",
+                  "type": [
+                    "null",
+                    {
+                      "type": "long",
+                      "logicalType": "timestamp-millis"
+                    }
+                  ],
+                  "default": null,
+                  "doc": "User's joined date."
                 }
               ]
             }
