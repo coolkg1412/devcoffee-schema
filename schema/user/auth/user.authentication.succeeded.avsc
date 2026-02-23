@@ -1,7 +1,7 @@
 {
   "type": "record",
   "name": "UserAuthenticationSucceeded",
-  "namespace": "tech.devcoffee.sso.integration.events.user.auth",
+  "namespace": "tech.devcoffee.integration.events.user.auth",
   "doc": "Emitted when a user authentication succeeds.",
   "fields": [
     {

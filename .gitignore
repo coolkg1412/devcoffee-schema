@@ -178,3 +178,5 @@ db_test.sqlite3
 requirements.in
 /requirements-dev.txt
 .ruff_cache
+
+!lib/devcoffee-event-schemas/
