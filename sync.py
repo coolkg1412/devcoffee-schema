@@ -23,10 +23,14 @@ def main():
 
     setup_logging(log_file=Path.joinpath(base_url, "./logs/sync.log"))
 
+    request_kwarg = {"timeout": settings.timeout}
+    if settings.trust_cert_path and settings.trust_cert_path.exists():
+        request_kwarg["verify"] = str(settings.trust_cert_path)
+
     worker = SyncWorker(
         settings.schema_dir,
         registry_url=settings.registry_url,
-        request_kwarg={"timeout": settings.timeout},
+        request_kwarg=request_kwarg,
         max_workers=calculate_workers(),
     )
     worker.run()
