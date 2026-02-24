@@ -16,6 +16,7 @@ class Settings:
     schema_dir: Path
     timeout: int = 10
     trust_cert_path: Path | None = None
+    subject_name_strategy: str = "RecordNameStrategy"
 
     @classmethod
     def from_env(cls) -> "Settings":
@@ -31,9 +32,18 @@ class Settings:
         if not trust_cert_path.is_absolute():
             trust_cert_path = Path.joinpath(BASE_DIR, trust_cert_path)
 
+        subject_name_strategy = env.str("SUBJECT_NAME_STRATEGY", "RecordNameStrategy")
+        if subject_name_strategy not in ("TopicNameStrategy", "RecordNameStrategy"):
+            raise ValueError(
+                "Invalid subject name strategy: "
+                f"{subject_name_strategy}. "
+                "Must be 'TopicNameStrategy' or 'RecordNameStrategy'."
+            )
+
         return cls(
             registry_url=registry_url,
             schema_dir=schema_dir,
+            subject_name_strategy=subject_name_strategy,
             timeout=timeout,
             trust_cert_path=trust_cert_path,
         )

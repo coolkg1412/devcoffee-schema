@@ -1,0 +1,76 @@
+{
+  "type": "record",
+  "name": "TokenRevoked",
+  "namespace": "tech.devcoffee.integration.events.token",
+  "doc": "Emitted when a token is revoked.",
+  "fields": [
+    {
+      "name": "event_id",
+      "type": "string",
+      "doc": "Unique identifier of the event (uuid)"
+    },
+    {
+      "name": "trace_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Trace identifier for distributed tracing (uuid)"
+    },
+    {
+      "name": "event_time",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "When the token was issued"
+    },
+    {
+      "name": "event_name",
+      "type": "string",
+      "default": "token.issued",
+      "doc": "The name of the event"
+    },
+    {
+      "name": "producer",
+      "type": "string",
+      "doc": "Service that produced the event"
+    },
+    {
+      "name": "data",
+      "doc": "Event payload data",
+      "type": {
+        "type": "record",
+        "name": "RevokedTokenData",
+        "fields": [
+          {
+            "name": "token",
+            "type": "string",
+            "doc": "The revoked token string."
+          },
+          {
+            "name": "tokenType",
+            "type": "string",
+            "doc": "The type of the token revoked (access_token, id_token)."
+          },
+          {
+            "name": "email",
+            "type": "string",
+            "doc": "The email of the user for whom the token was revoked."
+          },
+          {
+            "name": "userId",
+            "type": {
+              "type": "string",
+              "logicalType": "uuid"
+            },
+            "doc": "The unique identifier of the user."
+          },
+          {
+            "name": "clientId",
+            "type": "string",
+            "doc": "The client identifier of the application that requested the token."
+          }
+        ]
+      }
+    }
+  ]
+}

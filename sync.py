@@ -30,6 +30,7 @@ def main():
     worker = SyncWorker(
         settings.schema_dir,
         registry_url=settings.registry_url,
+        subject_name_strategy=settings.subject_name_strategy,
         request_kwarg=request_kwarg,
         max_workers=calculate_workers(),
     )
