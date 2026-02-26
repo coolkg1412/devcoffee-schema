@@ -1,0 +1,13 @@
+[project]
+name = "devcoffee-integration-event"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [{ name = "Hieu Nguyen", email = "hieu.nguyen@devcoffee.tech" }]
+dependencies = []
+requires-python = ">=3.12.8"
+readme = "README.md"
+license = { text = "MIT" }
+
+
+[tool.pdm]
+distribution = false
