@@ -1,1 +1,1 @@
-from .token import IssuedTokenData, TokenIssuedEvent
+from .base import BaseEvent

@@ -4,6 +4,9 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field
 
+__all__=[
+    "BaseEvent"
+]
 
 class BaseEvent(BaseModel):
     event_id: UUID = Field(..., description="Unique identifier of the event (uuid)")
