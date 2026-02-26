@@ -1,13 +1,18 @@
 [project]
 name = "devcoffee-integration-event"
-version = "0.1.0"
-description = "Default template for PDM package"
+version = "1.0.0"
+description = "DevCoffee events data"
 authors = [{ name = "Hieu Nguyen", email = "hieu.nguyen@devcoffee.tech" }]
-dependencies = []
-requires-python = ">=3.12.8"
+requires-python = ">=3.12"
 readme = "README.md"
 license = { text = "MIT" }
 
+dependencies = ["pydantic>=2.12.5"]
+
 
 [tool.pdm]
-distribution = false
+distribution = true
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
