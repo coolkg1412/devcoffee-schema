@@ -26,7 +26,7 @@
     {
       "name": "event_name",
       "type": "string",
-      "default": "token.issued",
+      "default": "token.revoked",
       "doc": "The name of the event"
     },
     {
