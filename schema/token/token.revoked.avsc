@@ -10,6 +10,12 @@
       "doc": "Unique identifier of the event (uuid)"
     },
     {
+      "name": "event_version",
+      "type": "int",
+      "default": 1,
+      "doc": "Schema version used by this event."
+    },
+    {
       "name": "trace_id",
       "type": ["null", "string"],
       "default": null,
