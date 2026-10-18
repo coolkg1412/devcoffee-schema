@@ -13,10 +13,9 @@
   },
   "explorer.fileNesting.patterns": {
     "*.py": "*.pyc",
-    "pdm.lock": ".pdm*",
     ".env.example": ".env, .env.*",
     ".prettierrc": ".prettierrc.*, .prettierignore, .prettierrc.js, .prettierrc.json, .prettierrc.yaml, .prettierrc.yml",
-    "pyproject.toml": ".python-version-*, .pylintrc, .pylintrc-*, .python-version",
+    "pyproject.toml": ".python-version-*, .pylintrc, .pylintrc-*, .python-version, uv.lock",
     "Dockerfile": ".dockerignore",
   },
   "[json]": {

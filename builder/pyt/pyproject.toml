@@ -10,9 +10,14 @@ license = { text = "MIT" }
 dependencies = ["pydantic>=2.12.5"]
 
 
-[tool.pdm]
-distribution = true
-
 [build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
+requires = ["uv_build>=0.11.19,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv]
+package = true
+
+[tool.uv.build-backend]
+# Import package is `tech.devcoffee.integration.events`, not the project name.
+module-name = "tech"
+module-root = "src"

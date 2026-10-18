@@ -50,20 +50,20 @@ This command cleans the project, generates Java classes from the `.avsc` files i
 
 #### Python Module
 
-The Python project is managed with [PDM](https://pdm-project.org/).
+The Python project is managed with [uv](https://docs.astral.sh/uv/) and built with the `uv_build` backend.
 
 **Prerequisites:**
 - Python 3.12 or higher
-- PDM installed
+- uv installed
 
 **To install dependencies and build:**
 Navigate to the `builder/pyt` directory and run:
 ```bash
-# Install dependencies
-pdm install
+# Install dependencies (creates .venv from uv.lock)
+uv sync
 
-# Build the distributable wheel
-pdm build
+# Build the distributable wheel and sdist
+uv build
 ```
 The resulting wheel file will be located in the `dist/` directory.
 
