@@ -2,12 +2,12 @@
 
 Avro schemas (source of truth) for DevCoffee integration events, plus the Java and Python packages built from them.
 
-| Path | Content |
-|---|---|
-| `schema/<domain>/<event>.avsc` | Avro schemas, e.g. `schema/user/user.created.avsc` |
-| `builder/jav` | Maven project → `tech.devcoffee:devcoffee-event-schema` (classes generated from `schema/`) |
-| `builder/pyt` | uv project → `devcoffee-integration-event` (hand-written Pydantic models) |
-| `sync.ps1`, `sync.cmd`, `tools/sync.exe` | Register schemas in the Schema Registry |
+| Path                                     | Content                                                                                    |
+| ---------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `schema/<domain>/<event>.avsc`           | Avro schemas, e.g. `schema/user/user.created.avsc`                                         |
+| `builder/jav`                            | Maven project → `tech.devcoffee:devcoffee-event-schema` (classes generated from `schema/`) |
+| `builder/pyt`                            | uv project → `devcoffee-integration-event` (hand-written Pydantic models)                  |
+| `sync.ps1`, `sync.cmd`, `tools/sync.exe` | Register schemas in the Schema Registry                                                    |
 
 ## Workflow when changing a schema
 
@@ -66,12 +66,12 @@ Windows only (`tools/sync.exe`).
    SCHEMA_DIR=./schema
    ```
 
-   | Variable | Default | Meaning |
-   |---|---|---|
-   | `SCHEMA_REGISTRY_URL` | — | Registry base URL |
-   | `SCHEMA_DIR` | `schema` | Directory scanned recursively for `*.avsc` (relative to repo root) |
-   | `TRUST_CERT_PATH` | — | CA certificate used to verify HTTPS, if the file exists |
-   | `HTTP_TIMEOUT` | `10` | Request timeout in seconds |
+   | Variable                | Default              | Meaning                                                                                        |
+   | ----------------------- | -------------------- | ---------------------------------------------------------------------------------------------- |
+   | `SCHEMA_REGISTRY_URL`   | —                    | Registry base URL                                                                              |
+   | `SCHEMA_DIR`            | `schema`             | Directory scanned recursively for `*.avsc` (relative to repo root)                             |
+   | `TRUST_CERT_PATH`       | —                    | CA certificate used to verify HTTPS, if the file exists                                        |
+   | `HTTP_TIMEOUT`          | `10`                 | Request timeout in seconds                                                                     |
    | `SUBJECT_NAME_STRATEGY` | `RecordNameStrategy` | `RecordNameStrategy` → subject `<namespace>.<name>`; `TopicNameStrategy` → `<file-stem>-value` |
 
 2. Run from the repository root:

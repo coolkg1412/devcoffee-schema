@@ -1,21 +1,61 @@
-# devcoffee-schemas — Agent Guide
+# Project Overview
 
-Central SSOT for Apache Avro schemas used in integration events across the DevCoffee
-ecosystem. Schema-first: language-specific models (Java POJOs, Python Pydantic) are
-GENERATED from `schema/` — never hand-edit generated output.
+This repository, `devcoffee-schemas`, serves as the central source of truth for Apache Avro schemas used in integration events across the DevCoffee ecosystem. It facilitates a schema-first development approach, ensuring data consistency between services written in different languages.
 
-## Rules
+The core schemas are located in the `schema/` directory and are categorized by domain (e.g., `token`, `user`). They are consumed in three ways:
 
-1. Workspace contract first: root `../AGENTS.md` (Docs Gate, approval rules, truth
-   order) applies to all work in this repo. This repo is not GitNexus-indexed, so the
-   GitNexus-first rule does not apply here.
-2. Repo guides: `./README.md` and `./GEMINI.md` (project overview, build commands).
-   Build everything with `./sync.ps1` (or `./sync.cmd`); manual per-language builds
-   are documented in `GEMINI.md`.
-3. Every schema change is a cross-service contract change. Identify all consumers
-   (`devcoffee-product`, `devcoffee-webhook-gateway`, Java services) before editing;
-   breaking changes require a documented migration plan for every consumer.
-4. Prefer backward-compatible schema evolution (add optional fields with defaults);
-   never rename or remove a published field without a coordinated migration.
-5. Schemas live under `schema/` grouped by domain; follow the existing domain layout
-   when adding new event schemas.
+- **Java:** `builder/jav` generates Avro `SpecificRecord` classes from `schema/` at build time (`avro-maven-plugin`) and packages them as `tech.devcoffee:devcoffee-event-schema`.
+- **Python:** `builder/pyt` contains **hand-written** Pydantic models (`src/tech/devcoffee/integration/events/`) packaged as `devcoffee-integration-event`. They are NOT generated from the schemas — update them manually to match every schema change.
+- **Schema Registry:** `sync.ps1` / `sync.cmd` registers the `.avsc` files in the Confluent Schema Registry.
+
+See `README.md` for the full build, sync, and release steps.
+
+---
+
+## Building and Running
+
+### Java Module (`builder/jav`)
+
+**Prerequisites:** JDK 21 or higher.
+
+```bash
+cd builder/jav
+./mvnw clean install
+```
+
+This generates Java classes from `../../schema` into `target/generated-sources/avro`, packages the JAR into `target/`, and installs it into the local Maven repository (`~/.m2`).
+
+### Python Module (`builder/pyt`)
+
+**Prerequisites:** Python 3.12 or higher, [uv](https://docs.astral.sh/uv/). The build backend is `uv_build`.
+
+```bash
+cd builder/pyt
+uv sync    # create .venv from uv.lock
+uv build   # build wheel + sdist into dist/
+```
+
+### Schema Registry sync
+
+```powershell
+./sync.ps1   # PowerShell
+sync.cmd     # CMD
+```
+
+This only runs `tools/sync.exe`, which:
+
+1. Reads `.env` from the repository root (`SCHEMA_REGISTRY_URL`, `SCHEMA_DIR`, `TRUST_CERT_PATH`, optional `HTTP_TIMEOUT` and `SUBJECT_NAME_STRATEGY`).
+2. Collects every `*.avsc` under `SCHEMA_DIR`.
+3. POSTs each schema to `{SCHEMA_REGISTRY_URL}/subjects/{subject}/versions` (subject from `RecordNameStrategy` by default: `<namespace>.<name>`).
+
+It does **not** generate code or build the Java/Python packages. Its source lives in the workspace at `tools/schema-sync`.
+
+---
+
+## Development Conventions
+
+- **Schema-First:** All data model changes must start with a modification to an Avro schema in the `schema/` directory. Never edit generated Java sources in `builder/jav/target/`.
+- **Keep Python in sync manually:** After a schema change, update the matching Pydantic models in `builder/pyt` by hand.
+- **Versioning:** Bump `builder/jav/pom.xml` and `builder/pyt/pyproject.toml` versions when schemas change.
+- **Registry:** Producers such as `devcoffee-authorization-server` use `auto.register.schemas=false` and `use.latest.version=true`, so run `sync` to register new or changed schemas before they publish them.
+- **Formatting:** The project uses `.prettierrc` and `.editorconfig` to maintain a consistent code style. Ensure your editor is configured to use these files.
