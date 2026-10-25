@@ -1,0 +1,74 @@
+{
+  "type": "record",
+  "name": "MediaAssetCreated",
+  "namespace": "tech.devcoffee.integration.events.media",
+  "doc": "Emitted when a media asset is created.",
+  "fields": [
+    {
+      "name": "event_id",
+      "type": "string",
+      "doc": "Unique identifier of the event (uuid)"
+    },
+    {
+      "name": "event_version",
+      "type": "int",
+      "default": 1,
+      "doc": "Schema version used by this event."
+    },
+    {
+      "name": "trace_id",
+      "type": ["null", "string"],
+      "default": null,
+      "doc": "Trace identifier for distributed tracing (uuid)"
+    },
+    {
+      "name": "event_name",
+      "type": "string",
+      "default": "media.asset.created",
+      "doc": "The name of the event"
+    },
+    {
+      "name": "event_time",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      },
+      "doc": "When the media asset was created"
+    },
+    {
+      "name": "producer",
+      "type": "string",
+      "doc": "Service that produced the event"
+    },
+    {
+      "name": "data",
+      "doc": "Event payload data",
+      "type": {
+        "type": "record",
+        "name": "MediaAssetCreatedData",
+        "fields": [
+          {
+            "name": "asset_id",
+            "type": "long",
+            "doc": "The identifier of the media asset."
+          },
+          {
+            "name": "storage_provider",
+            "type": "string",
+            "doc": "The storage provider holding the media file."
+          },
+          {
+            "name": "file_path",
+            "type": "string",
+            "doc": "The stored path of the media file."
+          },
+          {
+            "name": "original_filename",
+            "type": "string",
+            "doc": "The original filename of the media file."
+          }
+        ]
+      }
+    }
+  ]
+}
