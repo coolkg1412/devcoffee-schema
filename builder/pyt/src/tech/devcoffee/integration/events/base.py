@@ -1,8 +1,9 @@
 from datetime import datetime
-from typing import Generic, TypeVar
+from typing import Generic
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
+from typing_extensions import TypeVar
 
 __all__ = [
     "EventData",
@@ -17,7 +18,7 @@ class EventData(BaseModel):
     model_config = ConfigDict(extra="allow")
 
 
-DataT = TypeVar("DataT", bound=EventData)
+DataT = TypeVar("DataT", bound=EventData, default=EventData)
 
 
 class BaseEvent(BaseModel, Generic[DataT]):
