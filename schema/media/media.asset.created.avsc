@@ -12,7 +12,7 @@
     {
       "name": "event_version",
       "type": "int",
-      "default": 1,
+      "default": 2,
       "doc": "Schema version used by this event."
     },
     {
@@ -51,6 +51,12 @@
             "name": "asset_id",
             "type": "long",
             "doc": "The identifier of the media asset."
+          },
+          {
+            "name": "file_id",
+            "type": ["null", "long"],
+            "default": null,
+            "doc": "The identifier of the underlying media file, if available."
           },
           {
             "name": "storage_provider",
