@@ -1,6 +1,6 @@
 [project]
 name = "devcoffee-integration-event"
-version = "1.3.0"
+version = "1.3.1"
 description = "DevCoffee events data"
 authors = [{ name = "Hieu Nguyen", email = "hieu.nguyen@devcoffee.tech" }]
 requires-python = ">=3.12"
