@@ -1,1 +1,1 @@
-from .base import BaseEvent
+from .base import BaseEvent, EventData

@@ -1,8 +1,8 @@
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import ConfigDict, Field
 
-from .base import BaseEvent
+from .base import BaseEvent, EventData
 
 __all__ = [
     "IssuedTokenData",
@@ -12,7 +12,7 @@ __all__ = [
 ]
 
 
-class IssuedTokenData(BaseModel):
+class IssuedTokenData(EventData):
     token: str = Field(..., description="The issued token string.")
 
     token_type: str = Field(
@@ -24,10 +24,10 @@ class IssuedTokenData(BaseModel):
         ..., alias="clientId", description="The client identifier of the application that requested the token."
     )
 
-    model_config = ConfigDict(populate_by_name=True)
+    model_config = ConfigDict(populate_by_name=True, extra="ignore")
 
 
-class RevokedTokenData(BaseModel):
+class RevokedTokenData(EventData):
     token: str = Field(..., description="The revoked token string.")
     token_type: str = Field(
         ..., alias="tokenType", description="The type of the token revoked (access_token, id_token)."
@@ -38,12 +38,12 @@ class RevokedTokenData(BaseModel):
         ..., alias="clientId", description="The client identifier of the application that requested the token."
     )
 
-    model_config = ConfigDict(populate_by_name=True)
+    model_config = ConfigDict(populate_by_name=True, extra="ignore")
 
 
-class TokenIssuedEvent(BaseEvent):
-    data: IssuedTokenData
+class TokenIssuedEvent(BaseEvent[IssuedTokenData]):
+    pass
 
 
-class TokenRevokedEvent(BaseEvent):
-    data: RevokedTokenData
+class TokenRevokedEvent(BaseEvent[RevokedTokenData]):
+    pass

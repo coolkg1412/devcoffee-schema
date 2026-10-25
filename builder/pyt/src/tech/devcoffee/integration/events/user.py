@@ -4,7 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from .base import BaseEvent
+from .base import BaseEvent, EventData
 
 __all__ = [
     "User",
@@ -48,11 +48,13 @@ class Client(BaseModel):
     device: str | None = Field(default=None, description="Device identifier of the client")
 
 
-class AuthenticationPayload(BaseModel):
+class AuthenticationPayload(EventData):
+    model_config = ConfigDict(extra="ignore")
+
     user: User
     authentication: Authentication
     client: Client
 
 
-class UserAuthenticationSucceededEvent(BaseEvent):
-    data: AuthenticationPayload
+class UserAuthenticationSucceededEvent(BaseEvent[AuthenticationPayload]):
+    pass
